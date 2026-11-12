@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>គណិតវិទ្យា Online</title>
+<!--
+  =====================================================================
+  📘 គេហទំព័រសិក្សា — ឯកសារ HTML តែមួយ (HTML + CSS + JavaScript)
+  ---------------------------------------------------------------------
+  របៀបកែប្រែ (ជ្រើសរើសវិធីណាមួយ)៖
+   ✅ វិធីទី១ (ងាយបំផុត)៖ បើកគេហទំព័រ → ចុចប៊ូតុង 👩‍🏫 → បញ្ចូលពាក្យសម្ងាត់
+      (ពាក្យសម្ងាត់ដើម៖ 1234) → កែតាម Form → ចុច "💾 ទាញយក HTML"
+      រួចយកឯកសារថ្មីនោះជំនួសឯកសារចាស់។
+   ✅ វិធីទី២៖ កែដោយផ្ទាល់ក្នុងផ្នែក CONTENT ខាងក្រោម (មេរៀន Quiz
+      Flashcards សេចក្តីប្រកាស និងការកំណត់គេហទំព័រ)។
+   ✅ ពណ៌ និងពុម្ពអក្សរ៖ ផ្នែក :root ក្នុង <style> ឬក្នុង Teacher Mode។
+  =====================================================================
+-->
+
+<!-- =====================================================================
+  📝 ផ្នែក CONTENT — ខ្លឹមសារទាំងអស់របស់គេហទំព័រនៅទីនេះ
+  ---------------------------------------------------------------------
+  site          : ការកំណត់ទូទៅ (ចំណងជើង ពណ៌ ពាក្យសម្ងាត់គ្រូ ...)
+  announcements : សេចក្តីប្រកាស — type អាចជា "homework" "news" ឬ "exam"
+  lessons       : បញ្ជីមេរៀន។ មេរៀននីមួយៗមាន៖
+     id           : លេខសម្គាល់ (អក្សរឡាតាំង គ្មានដកឃ្លា ហើយមិនត្រូវដូចគ្នា)
+     grade        : ថ្នាក់ (ឧ. "ថ្នាក់ទី១០")
+     chapter      : ជំពូក
+     icon         : រូបតំណាង (Emoji ឧ. 📐)
+     title        : ចំណងជើងមេរៀន
+     description  : ការពិពណ៌នាខ្លីៗ
+     objectives   : គោលបំណង (មួយធាតុ = មួយបន្ទាត់)
+     content      : ខ្លឹមសារមេរៀន (អាចប្រើ HTML ដូចជា <p> <h3> <ul>)
+     image        : Link រូបភាព (ទុកទទេ "" បើគ្មាន)
+     imageCaption : ពាក្យពន្យល់រូបភាព
+     video        : Link វីដេអូ YouTube (ទុកទទេ "" បើគ្មាន)
+     pdf, pdfLabel: Link ឯកសារ PDF និងឈ្មោះប៊ូតុង
+     examples     : ឧទាហរណ៍ { q: សំណួរ, a: ដំណោះស្រាយ }
+     quiz         : សំណួរ Quiz { q, options:[...], answer: លេខចម្លើយត្រូវ
+                    (ចាប់ពី 0 = ចម្លើយទី១), explain: ការពន្យល់ }
+     flashcards   : { front: មុខកាត, back: ខ្នងកាត }
+  🔢 រូបមន្តគណិតវិទ្យា៖ សរសេររវាង $...$ (ក្នុងបន្ទាត់) ឬ $$...$$ (បន្ទាត់ដាច់ដោយឡែក)
+     ក្នុងផ្នែកនេះ ត្រូវសរសេរ \ ពីរដង ឧ. "$\\frac{a}{b}$" (ក្នុង Form គ្រូ សរសេរតែម្តង)
+  💡 ដើម្បីបន្ថែមមេរៀនថ្មី៖ ចម្លងមេរៀនមួយ { ... } ទាំងមូល ដាក់សញ្ញាក្បៀស , ហើយប្តូរខ្លឹមសារ
+====================================================================== -->
+<script id="site-content">
+/*CONTENT-START*/
+window.CONTENT = {
+  "site": {
+    "title": "គណិតវិទ្យា Online",
+    "subject": "គណិតវិទ្យា",
+    "grades": "ថ្នាក់ទី១០ – ទី១២",
+    "welcome": "រៀនមេរៀន មើលវីដេអូ ធ្វើលំហាត់ Quiz និងទន្ទេញរូបមន្តជាមួយ Flashcards — គ្រប់ពេល គ្រប់ទីកន្លែង តាមទូរស័ព្ទរបស់អ្នក។",
+    "schoolName": "ឈ្មោះសាលារបស់អ្នក",
+    "teacherName": "លោកគ្រូ / អ្នកគ្រូ",
+    "heroImage": "",
+    "primaryColor": "#2563eb",
+    "secondaryColor": "#16a34a",
+    "teacherPassword": "1234"
+  },
+  "announcements": [
+    {
+      "id": "a1",
+      "date": "2026-11-12",
+      "type": "homework",
+      "title": "កិច្ចការផ្ទះ៖ សមីការដឺក្រេទីពីរ",
+      "body": "សូមរៀនមេរៀន «សមីការដឺក្រេទីពីរ» ហើយធ្វើ Quiz ឱ្យបានយ៉ាងតិច ៤/៥ មុនថ្ងៃច័ន្ទក្រោយ។"
+    },
+    {
+      "id": "a2",
+      "date": "2026-11-10",
+      "type": "news",
+      "title": "ស្វាគមន៍មកកាន់គេហទំព័រសិក្សា!",
+      "body": "គេហទំព័រនេះមានមេរៀន លំហាត់ និង Flashcards សម្រាប់ជួយប្អូនៗរៀនបន្ថែមនៅផ្ទះ។ មេរៀនថ្មីនឹងបន្ថែមជារៀងរាល់សប្តាហ៍។"
+    }
+  ],
+  "lessons": [
+    {
+      "id": "quadratic",
+      "grade": "ថ្នាក់ទី១០",
+      "chapter": "សមីការ និងអនុគមន៍",
+      "icon": "📐",
+      "title": "សមីការដឺក្រេទីពីរ",
+      "description": "ដោះស្រាយសមីការ $ax^2+bx+c=0$ ដោយប្រើឌីសគ្រីមីណង់ $\\Delta$",
+      "objectives": [
+        "ស្គាល់ទម្រង់ទូទៅនៃសមីការដឺក្រេទីពីរ",
+        "គណនាឌីសគ្រីមីណង់ $\\Delta$ និងកំណត់ចំនួនឫស",
+        "ដោះស្រាយសមីការ និងប្រើទំនាក់ទំនងផលបូក–ផលគុណឫស"
+      ],
+      "content": "<p>សមីការដឺក្រេទីពីរ មានទម្រង់ទូទៅ៖</p><p>$$ax^2 + bx + c = 0 \\quad (a \\neq 0)$$</p><h3>ឌីសគ្រីមីណង់</h3><p>$$\\Delta = b^2 - 4ac$$</p><ul><li>បើ $\\Delta &gt; 0$ ៖ សមីការមានឫសពីរផ្សេងគ្នា $x_{1,2} = \\dfrac{-b \\pm \\sqrt{\\Delta}}{2a}$</li><li>បើ $\\Delta = 0$ ៖ សមីការមានឫសឌុប $x_1 = x_2 = -\\dfrac{b}{2a}$</li><li>បើ $\\Delta &lt; 0$ ៖ សមីការគ្មានឫសជាចំនួនពិត</li></ul><h3>ផលបូក និងផលគុណឫស</h3><p>បើសមីការមានឫស $x_1, x_2$ នោះ៖</p><p>$$x_1 + x_2 = -\\frac{b}{a}, \\qquad x_1 \\cdot x_2 = \\frac{c}{a}$$</p>",
+      "image": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 200'><rect width='320' height='200' rx='14' fill='%23eef4ff'/><line x1='20' y1='150' x2='300' y2='150' stroke='%2394a3b8' stroke-width='2'/><line x1='160' y1='12' x2='160' y2='190' stroke='%2394a3b8' stroke-width='2'/><path d='M60 20 Q160 340 260 20' fill='none' stroke='%232563eb' stroke-width='4'/><circle cx='117' cy='150' r='6' fill='%2316a34a'/><circle cx='203' cy='150' r='6' fill='%2316a34a'/><text x='104' y='176' font-size='15' fill='%23334155'>x₁</text><text x='196' y='176' font-size='15' fill='%23334155'>x₂</text><text x='292' y='142' font-size='14' fill='%23334155'>x</text><text x='168' y='26' font-size='14' fill='%23334155'>y</text></svg>",
+      "imageCaption": "ក្រាបប៉ារ៉ាបូល $y = ax^2+bx+c$ កាត់អ័ក្សអាប់ស៊ីសត្រង់ឫសទាំងពីរ $x_1$ និង $x_2$ (ករណី $\\Delta > 0$)",
+      "video": "",
+      "pdf": "",
+      "pdfLabel": "ទាញយកលំហាត់ PDF",
+      "examples": [
+        {
+          "q": "ដោះស្រាយសមីការ $x^2 - 2x - 3 = 0$",
+          "a": "$a = 1,\\ b = -2,\\ c = -3$<br>$\\Delta = (-2)^2 - 4(1)(-3) = 4 + 12 = 16 &gt; 0$<br>ដូចនេះ សមីការមានឫសពីរ៖<br>$x_1 = \\dfrac{2 + 4}{2} = 3, \\quad x_2 = \\dfrac{2 - 4}{2} = -1$"
+        },
+        {
+          "q": "ដោះស្រាយសមីការ $2x^2 + x + 3 = 0$",
+          "a": "$a = 2,\\ b = 1,\\ c = 3$<br>$\\Delta = 1^2 - 4(2)(3) = 1 - 24 = -23 &lt; 0$<br>ដូចនេះ សមីការគ្មានឫសជាចំនួនពិត។"
+        }
+      ],
+      "quiz": [
+        {
+          "q": "ឫសនៃសមីការ $x^2 - 5x + 6 = 0$ គឺ៖",
+          "options": ["$x = 2$ និង $x = 3$", "$x = -2$ និង $x = -3$", "$x = 1$ និង $x = 6$", "$x = -1$ និង $x = 6$"],
+          "answer": 0,
+          "explain": "$\\Delta = 25 - 24 = 1$ ដូចនេះ $x = \\dfrac{5 \\pm 1}{2}$ គឺ $x = 3$ ឬ $x = 2$។"
+        },
+        {
+          "q": "ឌីសគ្រីមីណង់នៃសមីការ $2x^2 + 3x - 2 = 0$ ស្មើ៖",
+          "options": ["$25$", "$7$", "$-7$", "$1$"],
+          "answer": 0,
+          "explain": "$\\Delta = b^2 - 4ac = 3^2 - 4(2)(-2) = 9 + 16 = 25$"
+        },
+        {
+          "q": "បើ $\\Delta < 0$ នោះសមីការដឺក្រេទីពីរ៖",
+          "options": ["មានឫសពីរផ្សេងគ្នា", "មានឫសឌុប", "គ្មានឫសជាចំនួនពិត", "មានឫសរាប់មិនអស់"],
+          "answer": 2,
+          "explain": "ពេល $\\Delta < 0$ គេមិនអាចគណនា $\\sqrt{\\Delta}$ ក្នុងសំណុំចំនួនពិតបានទេ ដូចនេះគ្មានឫសជាចំនួនពិត។"
+        },
+        {
+          "q": "សមីការ $x^2 + 4x + 4 = 0$ មានឫស៖",
+          "options": ["$x = 2$", "$x = -2$ (ឫសឌុប)", "$x = \\pm 2$", "គ្មានឫស"],
+          "answer": 1,
+          "explain": "$\\Delta = 16 - 16 = 0$ ដូចនេះមានឫសឌុប $x = -\\dfrac{4}{2} = -2$។ (ឬ $(x+2)^2 = 0$)"
+        },
+        {
+          "q": "ផលបូកឫសនៃសមីការ $3x^2 - 6x + 1 = 0$ ស្មើ៖",
+          "options": ["$2$", "$-2$", "$\\dfrac{1}{3}$", "$6$"],
+          "answer": 0,
+          "explain": "$x_1 + x_2 = -\\dfrac{b}{a} = -\\dfrac{-6}{3} = 2$ (ចំណែក $\\dfrac{1}{3}$ គឺជាផលគុណឫស)"
+        }
+      ],
+      "flashcards": [
+        { "front": "ឌីសគ្រីមីណង់ $\\Delta$", "back": "$\\Delta = b^2 - 4ac$" },
+        { "front": "រូបមន្តឫស (ពេល $\\Delta > 0$)", "back": "$x_{1,2} = \\dfrac{-b \\pm \\sqrt{\\Delta}}{2a}$" },
+        { "front": "ផលបូកឫស $x_1 + x_2$", "back": "$-\\dfrac{b}{a}$" },
+        { "front": "ផលគុណឫស $x_1 \\cdot x_2$", "back": "$\\dfrac{c}{a}$" }
+      ]
+    },
+    {
+      "id": "derivative",
+      "grade": "ថ្នាក់ទី១១",
+      "chapter": "ដេរីវេ",
+      "icon": "📈",
+      "title": "ដេរីវេនៃអនុគមន៍",
+      "description": "រូបមន្តដេរីវេមូលដ្ឋាន និងមេគុណប្រាប់ទិសនៃបន្ទាត់ប៉ះ",
+      "objectives": [
+        "យល់ពីនិយមន័យនៃដេរីវេ",
+        "ប្រើរូបមន្តដេរីវេមូលដ្ឋានបានត្រឹមត្រូវ",
+        "រកសមីការបន្ទាត់ប៉ះក្រាបនៃអនុគមន៍"
+      ],
+      "content": "<h3>និយមន័យ</h3><p>ដេរីវេនៃអនុគមន៍ $f$ ត្រង់ $x$ គឺ៖</p><p>$$f'(x) = \\lim_{h \\to 0} \\frac{f(x+h) - f(x)}{h}$$</p><h3>រូបមន្តមូលដ្ឋាន</h3><ul><li>$(c)' = 0$ ($c$ ជាចំនួនថេរ)</li><li>$(x^n)' = n\\,x^{n-1}$</li><li>$(k \\cdot u)' = k \\cdot u'$</li><li>$(u + v)' = u' + v'$</li><li>$(u \\cdot v)' = u'v + uv'$</li><li>$\\left(\\dfrac{u}{v}\\right)' = \\dfrac{u'v - uv'}{v^2}$</li><li>$(\\sqrt{x})' = \\dfrac{1}{2\\sqrt{x}}$</li></ul><h3>អត្ថន័យធរណីមាត្រ</h3><p>$f'(x_0)$ គឺជាមេគុណប្រាប់ទិសនៃបន្ទាត់ប៉ះក្រាប $f$ ត្រង់ចំណុចអាប់ស៊ីស $x_0$។ សមីការបន្ទាត់ប៉ះ៖</p><p>$$y = f'(x_0)(x - x_0) + f(x_0)$$</p>",
+      "image": "",
+      "imageCaption": "",
+      "video": "",
+      "pdf": "",
+      "pdfLabel": "ទាញយកលំហាត់ PDF",
+      "examples": [
+        {
+          "q": "គណនាដេរីវេនៃ $f(x) = 3x^4 - 2x^2 + 5$",
+          "a": "$f'(x) = 3 \\cdot 4x^3 - 2 \\cdot 2x + 0 = 12x^3 - 4x$"
+        },
+        {
+          "q": "រកសមីការបន្ទាត់ប៉ះក្រាប $y = x^2$ ត្រង់ចំណុច $x_0 = 1$",
+          "a": "$f(1) = 1$ និង $f'(x) = 2x \\Rightarrow f'(1) = 2$<br>$y = 2(x - 1) + 1 = 2x - 1$"
+        }
+      ],
+      "quiz": [
+        {
+          "q": "$(x^3)'$ ស្មើ៖",
+          "options": ["$3x^2$", "$x^2$", "$3x^3$", "$\\dfrac{x^4}{4}$"],
+          "answer": 0,
+          "explain": "$(x^n)' = n x^{n-1}$ ដូចនេះ $(x^3)' = 3x^2$។"
+        },
+        {
+          "q": "បើ $f(x) = 5x^2 - 3x + 7$ នោះ $f'(x)$ ស្មើ៖",
+          "options": ["$10x + 7$", "$10x - 3$", "$5x - 3$", "$10x^2 - 3$"],
+          "answer": 1,
+          "explain": "$(5x^2)' = 10x$, $(-3x)' = -3$, $(7)' = 0$ ដូចនេះ $f'(x) = 10x - 3$។"
+        },
+        {
+          "q": "ដេរីវេនៃចំនួនថេរ $9$ ស្មើ៖",
+          "options": ["$9$", "$1$", "$0$", "$9x$"],
+          "answer": 2,
+          "explain": "ដេរីវេនៃចំនួនថេរណាមួយ តែងតែស្មើ $0$។"
+        },
+        {
+          "q": "$(\\sqrt{x})'$ ស្មើ៖",
+          "options": ["$\\dfrac{1}{2\\sqrt{x}}$", "$2\\sqrt{x}$", "$\\dfrac{1}{\\sqrt{x}}$", "$\\dfrac{\\sqrt{x}}{2}$"],
+          "answer": 0,
+          "explain": "$\\sqrt{x} = x^{1/2}$ ដូចនេះ $(x^{1/2})' = \\dfrac{1}{2} x^{-1/2} = \\dfrac{1}{2\\sqrt{x}}$។"
+        },
+        {
+          "q": "មេគុណប្រាប់ទិសនៃបន្ទាត់ប៉ះក្រាប $y = x^2$ ត្រង់ $x = 3$ ស្មើ៖",
+          "options": ["$9$", "$3$", "$6$", "$2$"],
+          "answer": 2,
+          "explain": "$f'(x) = 2x$ ដូចនេះ $f'(3) = 6$។"
+        }
+      ],
+      "flashcards": [
+        { "front": "$(x^n)'$", "back": "$n\\,x^{n-1}$" },
+        { "front": "$(u \\cdot v)'$", "back": "$u'v + uv'$" },
+        { "front": "$\\left(\\dfrac{u}{v}\\right)'$", "back": "$\\dfrac{u'v - uv'}{v^2}$" },
+        { "front": "អត្ថន័យធរណីមាត្រនៃ $f'(x_0)$", "back": "មេគុណប្រាប់ទិសនៃបន្ទាត់ប៉ះក្រាប ត្រង់ចំណុច $x_0$" }
+      ]
+    },
+    {
+      "id": "integral",
+      "grade": "ថ្នាក់ទី១២",
+      "chapter": "អាំងតេក្រាល",
+      "icon": "🧮",
+      "title": "ព្រីមីទីវ និងអាំងតេក្រាល",
+      "description": "រកព្រីមីទីវ និងគណនាអាំងតេក្រាលកំណត់ $\\int_a^b f(x)\\,dx$",
+      "objectives": [
+        "យល់ពីនិយមន័យនៃព្រីមីទីវ",
+        "ប្រើរូបមន្តអាំងតេក្រាលមូលដ្ឋាន",
+        "គណនាអាំងតេក្រាលកំណត់"
+      ],
+      "content": "<h3>ព្រីមីទីវ</h3><p>$F$ ជាព្រីមីទីវនៃ $f$ បើ $F'(x) = f(x)$។ គេសរសេរ៖</p><p>$$\\int f(x)\\,dx = F(x) + C$$</p><h3>រូបមន្តមូលដ្ឋាន</h3><ul><li>$\\displaystyle\\int k\\,dx = kx + C$</li><li>$\\displaystyle\\int x^n\\,dx = \\frac{x^{n+1}}{n+1} + C \\quad (n \\neq -1)$</li><li>$\\displaystyle\\int \\big(f(x) \\pm g(x)\\big)\\,dx = \\int f(x)\\,dx \\pm \\int g(x)\\,dx$</li></ul><h3>អាំងតេក្រាលកំណត់</h3><p>$$\\int_a^b f(x)\\,dx = \\Big[F(x)\\Big]_a^b = F(b) - F(a)$$</p><p>បើ $f(x) \\geq 0$ លើ $[a, b]$ អាំងតេក្រាលនេះស្មើនឹងក្រឡាផ្ទៃនៃតំបន់ក្រោមក្រាប $f$ ពី $x = a$ ដល់ $x = b$។</p>",
+      "image": "",
+      "imageCaption": "",
+      "video": "",
+      "pdf": "",
+      "pdfLabel": "ទាញយកលំហាត់ PDF",
+      "examples": [
+        {
+          "q": "គណនា $\\displaystyle\\int (3x^2 - 4x + 1)\\,dx$",
+          "a": "$= 3 \\cdot \\dfrac{x^3}{3} - 4 \\cdot \\dfrac{x^2}{2} + x + C = x^3 - 2x^2 + x + C$"
+        },
+        {
+          "q": "គណនា $\\displaystyle\\int_0^1 (x^2 + 1)\\,dx$",
+          "a": "$= \\Big[\\dfrac{x^3}{3} + x\\Big]_0^1 = \\Big(\\dfrac{1}{3} + 1\\Big) - 0 = \\dfrac{4}{3}$"
+        }
+      ],
+      "quiz": [
+        {
+          "q": "$\\displaystyle\\int x^2\\,dx$ ស្មើ៖",
+          "options": ["$2x + C$", "$\\dfrac{x^3}{3} + C$", "$x^3 + C$", "$\\dfrac{x^2}{2} + C$"],
+          "answer": 1,
+          "explain": "$\\displaystyle\\int x^n\\,dx = \\dfrac{x^{n+1}}{n+1} + C$ ដូចនេះ $\\displaystyle\\int x^2\\,dx = \\dfrac{x^3}{3} + C$។"
+        },
+        {
+          "q": "$\\displaystyle\\int 4\\,dx$ ស្មើ៖",
+          "options": ["$4 + C$", "$0$", "$4x + C$", "$2x^2 + C$"],
+          "answer": 2,
+          "explain": "$\\displaystyle\\int k\\,dx = kx + C$ ដូចនេះ $\\displaystyle\\int 4\\,dx = 4x + C$។"
+        },
+        {
+          "q": "$\\displaystyle\\int_0^2 x\\,dx$ ស្មើ៖",
+          "options": ["$1$", "$2$", "$4$", "$\\dfrac{1}{2}$"],
+          "answer": 1,
+          "explain": "$\\Big[\\dfrac{x^2}{2}\\Big]_0^2 = \\dfrac{4}{2} - 0 = 2$"
+        },
+        {
+          "q": "$\\displaystyle\\int (2x + 1)\\,dx$ ស្មើ៖",
+          "options": ["$x^2 + x + C$", "$2x^2 + x + C$", "$x^2 + C$", "$2 + C$"],
+          "answer": 0,
+          "explain": "$\\displaystyle\\int 2x\\,dx = x^2$ និង $\\displaystyle\\int 1\\,dx = x$ ដូចនេះលទ្ធផលគឺ $x^2 + x + C$។"
+        },
+        {
+          "q": "$\\displaystyle\\int_1^3 3x^2\\,dx$ ស្មើ៖",
+          "options": ["$27$", "$24$", "$8$", "$26$"],
+          "answer": 3,
+          "explain": "$\\Big[x^3\\Big]_1^3 = 27 - 1 = 26$"
+        }
+      ],
+      "flashcards": [
+        { "front": "$\\displaystyle\\int x^n\\,dx$", "back": "$\\dfrac{x^{n+1}}{n+1} + C \\quad (n \\neq -1)$" },
+        { "front": "$\\displaystyle\\int k\\,dx$", "back": "$kx + C$" },
+        { "front": "$\\displaystyle\\int_a^b f(x)\\,dx$", "back": "$F(b) - F(a)$" },
+        { "front": "ព្រីមីទីវ $F$ នៃ $f$", "back": "$F$ ដែល $F'(x) = f(x)$" }
+      ]
+    }
+  ]
+};
+/*CONTENT-END*/
+</script>
+
+<!-- ពុម្ពអក្សរខ្មែរ (Google Fonts) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Kantumruy+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- KaTeX សម្រាប់បង្ហាញរូបមន្តគណិតវិទ្យា -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+
+<style>
+/* =====================================================================
+   🎨 ពណ៌ និងពុម្ពអក្សរ — ប្តូរនៅទីនេះ
+   (--primary និង --secondary អាចប្តូរក្នុង Teacher Mode → ការកំណត់ ផងដែរ)
+   ===================================================================== */
+:root{
+  --primary:#2563eb;          /* ពណ៌សំខាន់ (ខៀវ) */
+  --secondary:#16a34a;        /* ពណ៌ទីពីរ (បៃតង) */
+  --bg:#f4f7fc;               /* ពណ៌ផ្ទៃខាងក្រោយ */
+  --surface:#ffffff;          /* ពណ៌កាត */
+  --surface-2:#eef3fb;
+  --text:#1e293b;             /* ពណ៌អក្សរ */
+  --muted:#64748b;
+  --border:#dbe3ef;
+  --ok:#16a34a; --bad:#dc2626; --warn:#d97706;
+  --radius:16px;
+  --shadow:0 4px 18px rgba(15,23,42,.07);
+  --font:'Kantumruy Pro','Battambang',system-ui,sans-serif;  /* ពុម្ពអក្សរ */
+  --fs:17px;                  /* ទំហំអក្សរ */
+  --primary-soft:color-mix(in srgb,var(--primary) 12%,transparent);
+  --secondary-soft:color-mix(in srgb,var(--secondary) 14%,transparent);
+}
+/* 🌙 ពណ៌ Dark Mode */
+html[data-theme="dark"]{
+  --bg:#0f172a; --surface:#1a2436; --surface-2:#243149; --text:#e5ecf6;
+  --muted:#9aa8bd; --border:#2f3d55; --shadow:0 4px 18px rgba(0,0,0,.25);
+  --primary-soft:color-mix(in srgb,var(--primary) 22%,transparent);
+  --secondary-soft:color-mix(in srgb,var(--secondary) 22%,transparent);
+}
+
+/* ---------- មូលដ្ឋាន ---------- */
+*{box-sizing:border-box}
+html{font-size:var(--fs)}
+body{margin:0;font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.8;transition:background .25s,color .25s}
+a{color:var(--primary)}
+img{max-width:100%}
+h1,h2,h3{line-height:1.45;margin:.2em 0 .5em}
+h2{font-size:1.35rem}
+.wrap{max-width:1100px;margin:0 auto;padding:0 18px}
+.katex{font-size:1.08em}
+.katex-display{overflow-x:auto;overflow-y:hidden;padding:4px 0}
+
+/* ---------- ក្បាលទំព័រ ---------- */
+.topbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.topbar .wrap{display:flex;align-items:center;gap:12px;min-height:64px;flex-wrap:nowrap}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);margin-right:auto}
+.brand .logo{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:22px;background:linear-gradient(135deg,var(--primary),var(--secondary))}
+.brand b{display:block;font-size:1.05rem;line-height:1.3}
+.brand small{display:block;color:var(--muted);font-size:.78rem;line-height:1.3}
+.nav{display:flex;gap:4px}
+.nav a{display:flex;align-items:center;gap:6px;padding:8px 10px;white-space:nowrap;border-radius:10px;text-decoration:none;color:var(--muted);font-weight:500;font-size:.95rem}
+.nav a:hover{background:var(--surface-2);color:var(--text)}
+.nav a.active{background:var(--primary-soft);color:var(--primary)}
+.tools{display:flex;align-items:center;gap:8px}
+.search{display:flex;align-items:center;gap:6px;background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:0 10px}
+.search input{border:0;background:transparent;color:var(--text);font:inherit;font-size:.92rem;padding:8px 0;width:140px;outline:none}
+.icon-btn{width:40px;height:40px;border-radius:12px;border:1px solid var(--border);background:var(--surface);display:grid;place-items:center;font-size:18px;cursor:pointer;text-decoration:none;color:var(--text)}
+.icon-btn:hover{background:var(--surface-2)}
+
+/* ---------- ប៊ូតុង ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 18px;border-radius:12px;border:0;background:var(--primary);color:#fff;font:inherit;font-weight:600;font-size:.95rem;cursor:pointer;text-decoration:none;transition:transform .1s,filter .15s}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{transform:scale(.97)}
+.btn-lg{padding:13px 24px;font-size:1.02rem}
+.btn-sm{padding:6px 12px;font-size:.85rem;border-radius:10px}
+.btn-green{background:var(--secondary)}
+.btn-ghost{background:var(--surface);color:var(--text);border:1px solid var(--border)}
+.btn-ghost:hover{background:var(--surface-2)}
+.btn-danger{background:var(--bad)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+/* ---------- កាត ---------- */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+section{margin:30px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
+.pill{display:inline-block;padding:4px 12px;border-radius:99px;background:var(--primary-soft);color:var(--primary);font-size:.85rem;font-weight:600}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:99px;background:var(--surface-2);color:var(--muted);font-size:.78rem;font-weight:500}
+.badge.ok{background:var(--secondary-soft);color:var(--secondary)}
+.muted{color:var(--muted)}
+.empty{text-align:center;padding:40px 20px;color:var(--muted)}
+
+/* ---------- ទំព័រដើម ---------- */
+.hero{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:center;margin-top:26px;padding:36px;border-radius:24px;background:linear-gradient(135deg,var(--primary-soft),var(--secondary-soft));border:1px solid var(--border)}
+.hero h1{font-size:2.1rem;margin:.4em 0 .3em}
+.hero p{font-size:1.05rem;color:var(--muted);margin:0 0 20px}
+.hero-art img{border-radius:18px;width:100%;object-fit:cover;max-height:300px}
+.formula-cloud{position:relative;min-height:240px}
+.formula-cloud .f{position:absolute;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:10px 16px;box-shadow:var(--shadow);font-size:1.05rem;animation:float 6s ease-in-out infinite}
+.formula-cloud .f:nth-child(1){top:6%;left:4%}
+.formula-cloud .f:nth-child(2){top:38%;right:2%;animation-delay:-2s}
+.formula-cloud .f:nth-child(3){bottom:6%;left:16%;animation-delay:-4s}
+.formula-cloud .big{position:absolute;inset:0;display:grid;place-items:center;font-size:84px;opacity:.9}
+@keyframes float{50%{transform:translateY(-8px)}}
+@media (prefers-reduced-motion:reduce){.formula-cloud .f{animation:none}}
+.progress-card{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.bar{flex:1;min-width:180px;height:12px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.bar>span{display:block;height:100%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:99px;transition:width .4s}
+.sec-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+
+/* ---------- កាតមេរៀន ---------- */
+.lesson-card{display:flex;gap:14px;text-decoration:none;color:var(--text);transition:transform .15s,border-color .15s}
+.lesson-card:hover{transform:translateY(-3px);border-color:var(--primary)}
+.lc-icon{flex:0 0 52px;height:52px;border-radius:14px;background:var(--primary-soft);display:grid;place-items:center;font-size:26px}
+.lc-meta{font-size:.8rem;color:var(--muted)}
+.lesson-card h3{margin:2px 0 4px;font-size:1.08rem}
+.lesson-card p{margin:0 0 8px;color:var(--muted);font-size:.92rem}
+.lc-foot{display:flex;gap:6px;flex-wrap:wrap}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.chip{padding:6px 14px;border-radius:99px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:inherit;font-size:.9rem;cursor:pointer}
+.chip.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.group-title{display:flex;align-items:center;gap:10px;margin:26px 0 12px;font-size:1.1rem}
+.group-title::after{content:"";flex:1;height:1px;background:var(--border)}
+
+/* ---------- ទំព័រមេរៀន ---------- */
+.crumbs{font-size:.88rem;color:var(--muted);margin:22px 0 6px}
+.crumbs a{text-decoration:none}
+.lesson-head{display:flex;gap:16px;align-items:center;margin-bottom:16px}
+.lesson-head .lc-icon{flex-basis:64px;height:64px;font-size:32px}
+.lesson-head h1{margin:0;font-size:1.7rem}
+.lesson-layout{display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start}
+.lesson-side{position:sticky;top:84px;display:flex;flex-direction:column;gap:12px}
+.lesson-side .btn{width:100%}
+.objectives{background:var(--secondary-soft);border:1px solid color-mix(in srgb,var(--secondary) 30%,transparent);border-radius:var(--radius);padding:16px 20px}
+.objectives h3{margin:0 0 6px;color:var(--secondary);font-size:1.02rem}
+.objectives ul{margin:0;padding-left:22px}
+.lesson-content h3{color:var(--primary);margin-top:1.2em}
+.lesson-content ul{padding-left:22px}
+figure{margin:18px 0}
+figure img{border-radius:14px;border:1px solid var(--border);display:block;margin:0 auto;max-height:380px}
+figcaption{text-align:center;font-size:.88rem;color:var(--muted);margin-top:8px}
+.video{position:relative;padding-top:56.25%;border-radius:14px;overflow:hidden;background:#000;margin:10px 0}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.example{border:1px solid var(--border);border-radius:14px;margin:12px 0;background:var(--surface);overflow:hidden}
+.example .ex-q{padding:14px 18px}
+.example summary{cursor:pointer;padding:10px 18px;background:var(--surface-2);font-weight:600;color:var(--primary);list-style:none;user-select:none}
+.example summary::-webkit-details-marker{display:none}
+.example summary::before{content:"▶ ";font-size:.8em}
+.example details[open] summary::before{content:"▼ "}
+.example .ex-a{padding:14px 18px;border-top:1px dashed var(--border)}
+.pager{display:flex;justify-content:space-between;gap:10px;margin-top:20px;flex-wrap:wrap}
+.placeholder{border:2px dashed var(--border);border-radius:14px;padding:18px;text-align:center;color:var(--muted)}
+
+/* ---------- Quiz ---------- */
+.quiz-q{margin-bottom:16px}
+.quiz-q .q-text{font-weight:600;margin:0 0 12px}
+.opts{display:grid;gap:8px}
+.opt{text-align:left;padding:12px 16px;border-radius:12px;border:2px solid var(--border);background:var(--surface);color:var(--text);font:inherit;cursor:pointer;display:flex;gap:10px;align-items:center;transition:border-color .15s,background .15s}
+.opt:hover:not(:disabled){border-color:var(--primary);background:var(--primary-soft)}
+.opt .letter{flex:0 0 30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--surface-2);font-weight:700;font-size:.85rem}
+.opt.correct{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent)}
+.opt.correct .letter{background:var(--ok);color:#fff}
+.opt.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent)}
+.opt.wrong .letter{background:var(--bad);color:#fff}
+.opt:disabled{cursor:default}
+.explain{margin-top:12px;padding:12px 16px;border-radius:12px;background:var(--surface-2);font-size:.95rem}
+.explain b.ok{color:var(--ok)} .explain b.bad{color:var(--bad)}
+.quiz-status{position:sticky;top:72px;z-index:5;margin-bottom:14px;display:flex;align-items:center;gap:14px}
+.result{text-align:center;padding:30px}
+.result .score{font-size:3rem;font-weight:700;color:var(--primary);line-height:1.2}
+
+/* ---------- Flashcards ---------- */
+.flash-wrap{max-width:560px;margin:0 auto}
+.flash{perspective:1200px;height:280px;cursor:pointer;margin:16px 0;outline:none}
+.flash-inner{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flash.flipped .flash-inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;font-size:1.35rem;box-shadow:var(--shadow);border:1px solid var(--border)}
+.face.front{background:var(--surface)}
+.face.back{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;transform:rotateY(180deg)}
+.face small{position:absolute;top:14px;left:18px;font-size:.78rem;opacity:.7}
+.face .hint{position:absolute;bottom:12px;font-size:.78rem;opacity:.6}
+.flash:focus-visible .face{outline:3px solid var(--primary)}
+
+/* ---------- សេចក្តីប្រកាស ---------- */
+.news{display:flex;gap:14px;margin-bottom:12px}
+.news .n-icon{flex:0 0 46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:22px;background:var(--primary-soft)}
+.news.homework .n-icon{background:color-mix(in srgb,var(--warn) 16%,transparent)}
+.news.exam .n-icon{background:color-mix(in srgb,var(--bad) 14%,transparent)}
+.news h3{margin:0;font-size:1.05rem}
+.news p{margin:4px 0 0}
+.news .date{font-size:.8rem;color:var(--muted)}
+
+/* ---------- Teacher Mode ---------- */
+#teacher-bar{background:linear-gradient(90deg,var(--primary),var(--secondary));color:#fff;font-size:.9rem}
+#teacher-bar .wrap{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+#teacher-bar .btn{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35)}
+#teacher-bar .dirty{background:#fff;color:var(--warn);padding:2px 10px;border-radius:99px;font-weight:600;font-size:.8rem}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:20px 0}
+.tab{padding:9px 16px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:inherit;cursor:pointer}
+.tab.active{background:var(--primary);border-color:var(--primary);color:#fff}
+.form{display:grid;gap:14px}
+.field label{display:block;font-weight:600;font-size:.92rem;margin-bottom:4px}
+.field .help{font-size:.8rem;color:var(--muted);margin-top:2px}
+.field input[type=text],.field input[type=url],.field input[type=password],.field input[type=date],.field select,.field textarea,.rep-row input[type=text],.rep-row textarea{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:inherit;font-size:.95rem}
+.field textarea,.rep-row textarea{min-height:80px;resize:vertical;font-family:ui-monospace,Menlo,Consolas,var(--font);font-size:.88rem}
+.field textarea.tall{min-height:220px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.rep{display:grid;gap:12px}
+.rep-row{border:1px solid var(--border);border-radius:14px;padding:14px;background:var(--surface-2);display:grid;gap:8px}
+.rep-row .rep-head{display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:.9rem}
+.opt-edit{display:flex;gap:8px;align-items:center}
+.opt-edit input[type=radio]{width:20px;height:20px;accent-color:var(--ok);flex:0 0 auto}
+.t-list .t-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.t-list .t-item:last-child{border-bottom:0}
+.t-item .grow{flex:1;min-width:0}
+.t-item .grow b{display:block}
+.thumb{max-height:90px;border-radius:10px;border:1px solid var(--border);margin-top:6px}
+.login{max-width:420px;margin:50px auto}
+.color-in{display:flex;gap:10px;align-items:center}
+.color-in input[type=color]{width:52px;height:40px;border:1px solid var(--border);border-radius:10px;background:var(--surface);padding:3px;cursor:pointer}
+
+/* ---------- បាតទំព័រ និង Toast ---------- */
+footer{border-top:1px solid var(--border);margin-top:50px;padding:24px 0 30px;color:var(--muted);font-size:.88rem;text-align:center}
+#toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);background:var(--text);color:var(--bg);padding:12px 20px;border-radius:12px;font-size:.92rem;opacity:0;pointer-events:none;transition:all .25s;z-index:100;max-width:90vw;text-align:center}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---------- ទូរស័ព្ទ (Responsive) ---------- */
+@media (max-width:1000px) and (min-width:761px){.nav a span{display:none}.search input{width:110px}}
+@media (max-width:900px){
+  .lesson-layout{grid-template-columns:1fr}
+  .lesson-side{position:static}
+}
+@media (max-width:760px){
+  :root{--fs:16px}
+  body{padding-bottom:72px}
+  .topbar .wrap{gap:10px;padding-top:8px;padding-bottom:8px;flex-wrap:wrap}
+  .tools{width:100%}
+  .search{flex:1}
+  .search input{width:100%}
+  .nav{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--surface);border-top:1px solid var(--border);justify-content:space-around;padding:6px 4px calc(6px + env(safe-area-inset-bottom));gap:0}
+  .nav a{flex-direction:column;gap:0;font-size:.72rem;padding:4px 6px;flex:1;text-align:center}
+  .nav a span{font-size:20px}
+  .hero{grid-template-columns:1fr;padding:24px;gap:10px}
+  .hero h1{font-size:1.6rem}
+  .formula-cloud{min-height:190px}
+  .two,.three{grid-template-columns:1fr}
+  .card{padding:16px}
+  .lesson-head h1{font-size:1.35rem}
+  .flash{height:240px}
+  .face{font-size:1.15rem}
+  .quiz-status{top:110px}
+}
+@media print{.topbar,.nav,#teacher-bar,footer,.lesson-side{display:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ===================== ក្បាលទំព័រ ===================== -->
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#home">
+      <span class="logo">📘</span>
+      <span><b id="brand-title"></b><small id="brand-sub"></small></span>
+    </a>
+    <nav class="nav" aria-label="ម៉ឺនុយ">
+      <a href="#home" data-nav="home"><span>🏠</span>ទំព័រដើម</a>
+      <a href="#lessons" data-nav="lessons"><span>📚</span>មេរៀន</a>
+      <a href="#cards/all" data-nav="cards"><span>🃏</span>Flashcards</a>
+      <a href="#news" data-nav="news"><span>📢</span>សេចក្តីប្រកាស</a>
+    </nav>
+    <div class="tools">
+      <label class="search"><span>🔍</span><input id="search" type="search" placeholder="ស្វែងរកមេរៀន..." aria-label="ស្វែងរកមេរៀន"></label>
+      <button id="theme-btn" class="icon-btn" type="button" title="ប្តូរ Dark Mode" aria-label="ប្តូរ Dark Mode">🌙</button>
+      <a href="#teacher" class="icon-btn" title="Teacher Mode (សម្រាប់គ្រូ)" aria-label="Teacher Mode">👩‍🏫</a>
+    </div>
+  </div>
+</header>
+
+<!-- របារ Teacher Mode (បង្ហាញតែពេលគ្រូចូល) -->
+<div id="teacher-bar" hidden>
+  <div class="wrap">
+    <b>👩‍🏫 Teacher Mode</b>
+    <span id="dirty-flag" class="dirty" hidden>● មានការកែប្រែមិនទាន់ទាញយក</span>
+    <span style="flex:1"></span>
+    <a class="btn btn-sm" href="#teacher">⚙️ ផ្ទាំងគ្រប់គ្រង</a>
+    <button class="btn btn-sm" type="button" id="tb-export">💾 ទាញយក HTML</button>
+    <button class="btn btn-sm" type="button" id="tb-logout">🚪 ចាកចេញ</button>
+  </div>
+</div>
+
+<!-- ខ្លឹមសារទំព័រនីមួយៗ ត្រូវបានបង្កើតដោយ JavaScript ខាងក្រោម -->
+<main id="app" class="wrap" tabindex="-1"></main>
+
+<footer><div class="wrap" id="footer"></div></footer>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* =====================================================================
+   ⚙️ កូដដំណើរការគេហទំព័រ (ជាធម្មតាមិនចាំបាច់កែផ្នែកនេះទេ)
+   ===================================================================== */
+(function () {
+  'use strict';
+
+  /* ---------- ថតចម្លងឯកសារដើម (សម្រាប់មុខងារ "ទាញយក HTML") ---------- */
+  var START = '/*CONTENT' + '-START*/', END = '/*CONTENT' + '-END*/';
+  var PRISTINE = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+  /* ---------- ឃ្លាំងទិន្នន័យក្នុង browser (localStorage) ---------- */
+  var KEYS = { draft: 'learnsite-draft-v1', progress: 'learnsite-progress-v1', theme: 'learnsite-theme' };
+  var store = {
+    get: function (k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
+    set: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } },
+    del: function (k) { try { localStorage.removeItem(k); } catch (e) {} }
+  };
+
+  /* ---------- ស្ថានភាព (State) ---------- */
+  var C;                 // ខ្លឹមសារបច្ចុប្បន្ន
+  var baseHash;          // សម្គាល់ឯកសារដើម
+  var isTeacher = false; // គ្រូបានចូលឬនៅ
+  var dirty = false;     // មានការកែប្រែមិនទាន់ទាញយក
+  var query = '';        // ពាក្យស្វែងរក
+  var gradeFilter = 'all';
+  var tTab = 'lessons';  // ផ្ទាំងបច្ចុប្បន្នក្នុង Teacher Mode
+  var editing = null;    // ធាតុដែលកំពុងកែ
+  var progress = store.get(KEYS.progress) || {};
+  progress.done = progress.done || {}; progress.scores = progress.scores || {};
+
+  var app = document.getElementById('app');
+
+  /* ---------- មុខងារជំនួយ ---------- */
+  function clone(o) { return JSON.parse(JSON.stringify(o)); }
+  function hash(s) { var h = 0; for (var i = 0; i < s.length; i++) { h = (h * 31 + s.charCodeAt(i)) | 0; } return String(h); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function kh(n) { return String(n).replace(/[0-9]/g, function (d) { return '០១២៣៤៥៦៧៨៩'[d]; }); }  // លេខខ្មែរ
+  function uid(p) { return p + '-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+  function rich(s) {  // ខ្លឹមសារ៖ បើមាន HTML ប្រើផ្ទាល់ បើអត្ថបទធម្មតា បំប្លែងជាកថាខណ្ឌ
+    s = s || '';
+    if (/<[a-z][\s\S]*>/i.test(s)) return s;
+    return s.split(/\n{2,}/).map(function (p) { return '<p>' + esc(p).replace(/\n/g, '<br>') + '</p>'; }).join('');
+  }
+  function plain(s) { return String(s || '').replace(/<[^>]+>/g, ' '); }
+  function ytId(url) { var m = String(url || '').match(/(?:youtu\.be\/|[?&]v=|embed\/|shorts\/|live\/)([\w-]{11})/); return m ? m[1] : ''; }
+  function fmtDate(d) { if (!d) return ''; var p = d.split('-'); return p.length === 3 ? kh(p[2] + '/' + p[1] + '/' + p[0]) : esc(d); }
+  function lessonById(id) { for (var i = 0; i < C.lessons.length; i++) if (C.lessons[i].id === id) return C.lessons[i]; return null; }
+  function toast(msg) { var t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast._t); toast._t = setTimeout(function () { t.classList.remove('show'); }, 2600); }
+  function math(el) {  // បង្ហាញរូបមន្តគណិតវិទ្យាដោយ KaTeX
+    if (!window.renderMathInElement) return;
+    try {
+      window.renderMathInElement(el || app, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '\\[', right: '\\]', display: true },
+          { left: '$', right: '$', display: false },
+          { left: '\\(', right: '\\)', display: false }
+        ],
+        throwOnError: false
+      });
+    } catch (e) {}
+  }
+  function saveProgress() { store.set(KEYS.progress, progress); }
+  function doneCount() { var n = 0; C.lessons.forEach(function (l) { if (progress.done[l.id]) n++; }); return n; }
+  var NEWS_TYPES = { homework: ['📝', 'កិច្ចការផ្ទះ'], news: ['📢', 'ព័ត៌មាន'], exam: ['🗓️', 'ការប្រឡង'] };
+
+  /* ---------- ចាប់ផ្តើម ---------- */
+  function init() {
+    var baseStr = JSON.stringify(window.CONTENT);
+    baseHash = hash(baseStr);
+    C = clone(window.CONTENT);
+    var d = store.get(KEYS.draft);
+    if (d && d.base === baseHash && d.content) { C = d.content; dirty = true; }
+    normalize();
+    var th = store.get(KEYS.theme);
+    if (!th) th = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    setTheme(th);
+    applySite();
+    bindHeader();
+    window.addEventListener('hashchange', route);
+    window.addEventListener('beforeunload', function (e) { if (isTeacher && dirty) { e.preventDefault(); e.returnValue = ''; } });
+    route();
+  }
+  function normalize() {
+    C.site = C.site || {}; C.announcements = C.announcements || []; C.lessons = C.lessons || [];
+    C.lessons.forEach(function (l) {
+      ['objectives', 'examples', 'quiz', 'flashcards'].forEach(function (k) { l[k] = l[k] || []; });
+    });
+  }
+
+  function setTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    document.getElementById('theme-btn').textContent = t === 'dark' ? '☀️' : '🌙';
+    store.set(KEYS.theme, t);
+  }
+
+  function applySite() {
+    var s = C.site, root = document.documentElement.style;
+    document.title = s.title || 'គេហទំព័រសិក្សា';
+    document.getElementById('brand-title').textContent = s.title || '';
+    document.getElementById('brand-sub').textContent = [s.subject, s.grades].filter(Boolean).join(' · ');
+    if (s.primaryColor) root.setProperty('--primary', s.primaryColor);
+    if (s.secondaryColor) root.setProperty('--secondary', s.secondaryColor);
+    document.getElementById('footer').innerHTML =
+      '<div>' + esc(s.schoolName || '') + (s.teacherName ? ' · ' + esc(s.teacherName) : '') + '</div>' +
+      '<div>© ' + kh(new Date().getFullYear()) + ' ' + esc(s.title || '') + ' — រៀនដោយក្តីរីករាយ 📘</div>';
+  }
+
+  function bindHeader() {
+    document.getElementById('theme-btn').onclick = function () {
+      setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    };
+    var input = document.getElementById('search');
+    input.addEventListener('input', function () {
+      query = input.value.trim();
+      if (location.hash.indexOf('#lessons') !== 0) location.hash = '#lessons'; else renderLessons();
+    });
+    document.getElementById('tb-export').onclick = exportHTML;
+    document.getElementById('tb-logout').onclick = function () {
+      if (dirty && !confirm('អ្នកមានការកែប្រែមិនទាន់ទាញយក។ ការកែប្រែនៅតែរក្សាទុកក្នុង browser នេះ។ ចាកចេញមែនទេ?')) return;
+      isTeacher = false; updateTeacherBar(); location.hash = '#home';
+    };
+  }
+
+  function updateTeacherBar() {
+    document.getElementById('teacher-bar').hidden = !isTeacher;
+    document.getElementById('dirty-flag').hidden = !dirty;
+  }
+
+  /* ---------- ការបញ្ជូនទៅទំព័រ (Router) ---------- */
+  function route() {
+    var h = decodeURIComponent(location.hash.slice(1) || 'home');
+    var parts = h.split('/'), page = parts[0], arg = parts.slice(1).join('/');
+    document.querySelectorAll('.nav a').forEach(function (a) {
+      var n = a.getAttribute('data-nav');
+      a.classList.toggle('active', n === page || (n === 'lessons' && (page === 'lesson' || page === 'quiz')));
+    });
+    updateTeacherBar();
+    if (page !== 'teacher') editing = null;
+    switch (page) {
+      case 'lessons': renderLessons(); break;
+      case 'lesson': renderLesson(arg); break;
+      case 'quiz': renderQuiz(arg); break;
+      case 'cards': renderCards(arg || 'all'); break;
+      case 'news': renderNews(); break;
+      case 'teacher': renderTeacher(); break;
+      default: renderHome();
+    }
+    if (page !== 'lessons') window.scrollTo(0, 0);
+  }
+
+  /* =====================================================================
+     🏠 ទំព័រដើម
+     ===================================================================== */
+  function lessonCard(l) {
+    var sc = progress.scores[l.id];
+    return '<a class="card lesson-card" href="#lesson/' + encodeURIComponent(l.id) + '">' +
+      '<div class="lc-icon">' + esc(l.icon || '📘') + '</div>' +
+      '<div><div class="lc-meta">' + esc(l.grade) + (l.chapter ? ' · ' + esc(l.chapter) : '') + '</div>' +
+      '<h3>' + esc(l.title) + '</h3><p>' + esc(l.description) + '</p>' +
+      '<div class="lc-foot">' +
+        (progress.done[l.id] ? '<span class="badge ok">✅ រៀនចប់</span>' : '') +
+        (l.quiz.length ? '<span class="badge">❓ ' + kh(l.quiz.length) + ' សំណួរ</span>' : '') +
+        (sc != null ? '<span class="badge">🏆 ' + kh(sc) + '/' + kh(l.quiz.length) + '</span>' : '') +
+      '</div></div></a>';
+  }
+  function newsItem(a) {
+    var t = NEWS_TYPES[a.type] || NEWS_TYPES.news;
+    return '<div class="card news ' + esc(a.type) + '"><div class="n-icon">' + t[0] + '</div><div>' +
+      '<div class="date">' + t[1] + ' · ' + fmtDate(a.date) + '</div><h3>' + esc(a.title) + '</h3>' +
+      '<p>' + esc(a.body).replace(/\n/g, '<br>') + '</p></div></div>';
+  }
+  function sortedNews() { return C.announcements.slice().sort(function (a, b) { return (b.date || '').localeCompare(a.date || ''); }); }
+
+  function renderHome() {
+    var s = C.site, total = C.lessons.length, done = doneCount(), pct = total ? Math.round(done / total * 100) : 0;
+    var art = s.heroImage
+      ? '<img src="' + esc(s.heroImage) + '" alt="">'
+      : '<div class="formula-cloud"><div class="f">$ax^2+bx+c=0$</div><div class="f">$f\'(x)=nx^{n-1}$</div><div class="f">$\\int_a^b f(x)\\,dx$</div><div class="big">📘</div></div>';
+    var news = sortedNews().slice(0, 2);
+    app.innerHTML =
+      '<section class="hero"><div>' +
+        '<span class="pill">' + esc(s.subject) + ' · ' + esc(s.grades) + '</span>' +
+        '<h1>' + esc(s.title) + '</h1><p>' + esc(s.welcome) + '</p>' +
+        '<div class="row"><a class="btn btn-lg" href="#lessons">🚀 ចាប់ផ្តើមរៀន</a>' +
+        '<a class="btn btn-ghost btn-lg" href="#cards/all">🃏 Flashcards</a></div>' +
+      '</div><div class="hero-art">' + art + '</div></section>' +
+
+      '<section class="card"><div class="progress-card">' +
+        '<div><b>📊 វឌ្ឍនភាពរបស់អ្នក</b><div class="muted" style="font-size:.9rem">រៀនចប់ ' + kh(done) + ' / ' + kh(total) + ' មេរៀន</div></div>' +
+        '<div class="bar"><span style="width:' + pct + '%"></span></div><b>' + kh(pct) + '%</b>' +
+        (done ? '<button class="btn btn-ghost btn-sm" id="reset-prog" type="button">↺ ចាប់ផ្តើមឡើងវិញ</button>' : '') +
+      '</div></section>' +
+
+      (news.length ? '<section><div class="sec-head"><h2>📢 សេចក្តីប្រកាសថ្មីៗ</h2><a href="#news">មើលទាំងអស់ →</a></div>' + news.map(newsItem).join('') + '</section>' : '') +
+
+      '<section><div class="sec-head"><h2>📚 មេរៀន</h2><a href="#lessons">មើលទាំងអស់ →</a></div>' +
+        (C.lessons.length ? '<div class="grid">' + C.lessons.slice(0, 6).map(lessonCard).join('') + '</div>' : '<div class="card empty">មិនទាន់មានមេរៀន</div>') +
+      '</section>';
+    var r = document.getElementById('reset-prog');
+    if (r) r.onclick = function () { if (confirm('លុបវឌ្ឍនភាព និងពិន្ទុទាំងអស់?')) { progress = { done: {}, scores: {} }; saveProgress(); renderHome(); } };
+    math();
+  }
+
+  /* =====================================================================
+     📚 បញ្ជីមេរៀន + ការស្វែងរក
+     ===================================================================== */
+  function renderLessons() {
+    var q = query.toLowerCase();
+    var grades = [];
+    C.lessons.forEach(function (l) { if (l.grade && grades.indexOf(l.grade) < 0) grades.push(l.grade); });
+    var list = C.lessons.filter(function (l) {
+      if (gradeFilter !== 'all' && l.grade !== gradeFilter) return false;
+      if (!q) return true;
+      return [l.title, l.description, l.chapter, l.grade, plain(l.content)].join(' ').toLowerCase().indexOf(q) >= 0;
+    });
+    var groups = {}, order = [];
+    list.forEach(function (l) { var k = l.grade || 'ផ្សេងៗ'; if (!groups[k]) { groups[k] = []; order.push(k); } groups[k].push(l); });
+
+    app.innerHTML =
+      '<section><h1>📚 មេរៀនទាំងអស់</h1>' +
+      (q ? '<p class="muted">លទ្ធផលស្វែងរក «' + esc(query) + '»៖ ' + kh(list.length) + ' មេរៀន</p>' : '') +
+      '<div class="chips"><button class="chip' + (gradeFilter === 'all' ? ' active' : '') + '" data-g="all" type="button">ទាំងអស់</button>' +
+        grades.map(function (g) { return '<button class="chip' + (gradeFilter === g ? ' active' : '') + '" data-g="' + esc(g) + '" type="button">' + esc(g) + '</button>'; }).join('') +
+      '</div>' +
+      (list.length ? order.map(function (g) {
+        return '<div class="group-title">🎓 ' + esc(g) + '</div><div class="grid">' + groups[g].map(lessonCard).join('') + '</div>';
+      }).join('') : '<div class="card empty">🔍 រកមិនឃើញមេរៀនដែលត្រូវនឹងការស្វែងរក</div>') +
+      '</section>';
+    app.querySelectorAll('.chip').forEach(function (b) { b.onclick = function () { gradeFilter = b.getAttribute('data-g'); renderLessons(); }; });
+    math();
+  }
+
+  /* =====================================================================
+     📖 ទំព័រមេរៀន
+     ===================================================================== */
+  function renderLesson(id) {
+    var l = lessonById(id);
+    if (!l) { app.innerHTML = '<div class="card empty" style="margin-top:30px">រកមិនឃើញមេរៀននេះទេ។ <a href="#lessons">ត្រឡប់ទៅបញ្ជីមេរៀន</a></div>'; return; }
+    var idx = C.lessons.indexOf(l), prev = C.lessons[idx - 1], next = C.lessons[idx + 1];
+    var vid = ytId(l.video), done = !!progress.done[l.id];
+    var html =
+      '<div class="crumbs"><a href="#lessons">📚 មេរៀន</a> › ' + esc(l.grade) + (l.chapter ? ' › ' + esc(l.chapter) : '') + '</div>' +
+      '<div class="lesson-head"><div class="lc-icon">' + esc(l.icon || '📘') + '</div><div><h1>' + esc(l.title) + '</h1><div class="muted">' + esc(l.description) + '</div></div></div>' +
+      '<div class="lesson-layout"><div>';
+
+    if (l.objectives.length) html += '<div class="objectives"><h3>🎯 គោលបំណងនៃមេរៀន</h3><ul>' + l.objectives.map(function (o) { return '<li>' + esc(o) + '</li>'; }).join('') + '</ul></div>';
+
+    html += '<div class="card lesson-content" style="margin-top:16px"><h2>📖 ខ្លឹមសារមេរៀន</h2>' + rich(l.content);
+    if (l.image) html += '<figure><img src="' + esc(l.image) + '" alt="' + esc(plain(l.imageCaption) || l.title) + '" loading="lazy">' + (l.imageCaption ? '<figcaption>' + esc(l.imageCaption) + '</figcaption>' : '') + '</figure>';
+    html += '</div>';
+
+    if (vid) html += '<div class="card" style="margin-top:16px"><h2>🎬 វីដេអូមេរៀន</h2><div class="video"><iframe src="https://www.youtube-nocookie.com/embed/' + vid + '" title="' + esc(l.title) + '" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div></div>';
+    else if (l.video) html += '<div class="card" style="margin-top:16px"><h2>🎬 វីដេអូមេរៀន</h2><a class="btn" href="' + esc(l.video) + '" target="_blank" rel="noopener">▶ មើលវីដេអូ</a></div>';
+    else if (isTeacher) html += '<div class="placeholder" style="margin-top:16px">🎬 មិនទាន់មានវីដេអូ — ចុច «✏️ កែមេរៀននេះ» ដើម្បីបិទភ្ជាប់ Link YouTube</div>';
+
+    if (l.examples.length) {
+      html += '<div class="card" style="margin-top:16px"><h2>✏️ ឧទាហរណ៍ និងដំណោះស្រាយ</h2>' +
+        l.examples.map(function (e, i) {
+          // សំណួរបង្ហាញជានិច្ច ដំណោះស្រាយចុចបើក/បិទបាន
+          return '<div class="example"><div class="ex-q"><b>ឧទាហរណ៍ទី ' + kh(i + 1) + '៖</b> ' + rich(e.q).replace(/^<p>|<\/p>$/g, '') + '</div>' +
+            '<details><summary>មើលដំណោះស្រាយ</summary><div class="ex-a">' + rich(e.a) + '</div></details></div>';
+        }).join('') + '</div>';
+    }
+    html += '<div class="pager">' +
+      (prev ? '<a class="btn btn-ghost" href="#lesson/' + encodeURIComponent(prev.id) + '">← ' + esc(prev.title) + '</a>' : '<span></span>') +
+      (next ? '<a class="btn btn-ghost" href="#lesson/' + encodeURIComponent(next.id) + '">' + esc(next.title) + ' →</a>' : '') +
+      '</div></div>';
+
+    // របារចំហៀង
+    html += '<aside class="lesson-side">' +
+      '<div class="card"><b>🧭 សកម្មភាព</b><div style="display:grid;gap:10px;margin-top:10px">' +
+        (l.quiz.length ? '<a class="btn" href="#quiz/' + encodeURIComponent(l.id) + '">📝 ធ្វើ Quiz (' + kh(l.quiz.length) + ' សំណួរ)</a>' : '') +
+        (l.flashcards.length ? '<a class="btn btn-green" href="#cards/' + encodeURIComponent(l.id) + '">🃏 Flashcards (' + kh(l.flashcards.length) + ')</a>' : '') +
+        (l.pdf ? '<a class="btn btn-ghost" href="' + esc(l.pdf) + '" target="_blank" rel="noopener" download>📄 ' + esc(l.pdfLabel || 'ទាញយក PDF') + '</a>' : '') +
+        '<button class="btn ' + (done ? 'btn-green' : 'btn-ghost') + '" id="mark-done" type="button">' + (done ? '✅ បានរៀនចប់' : '☐ សម្គាល់ថារៀនចប់') + '</button>' +
+        (progress.scores[l.id] != null ? '<div class="muted" style="text-align:center;font-size:.9rem">🏆 ពិន្ទុល្អបំផុត៖ ' + kh(progress.scores[l.id]) + '/' + kh(l.quiz.length) + '</div>' : '') +
+        (isTeacher ? '<button class="btn btn-ghost" id="edit-this" type="button">✏️ កែមេរៀននេះ</button>' : '') +
+      '</div></div></aside></div>';
+
+    app.innerHTML = html;
+    document.getElementById('mark-done').onclick = function () {
+      if (progress.done[l.id]) delete progress.done[l.id]; else progress.done[l.id] = true;
+      saveProgress(); renderLesson(id);
+      if (progress.done[l.id]) toast('🎉 ល្អណាស់! អ្នកបានរៀនចប់មេរៀន «' + l.title + '»');
+    };
+    var ed = document.getElementById('edit-this');
+    if (ed) ed.onclick = function () { tTab = 'lessons'; editing = { kind: 'lesson', data: clone(l), isNew: false }; location.hash = '#teacher'; };
+    math();
+  }
+
+  /* =====================================================================
+     📝 Quiz
+     ===================================================================== */
+  function renderQuiz(id) {
+    var l = lessonById(id);
+    if (!l || !l.quiz.length) { app.innerHTML = '<div class="card empty" style="margin-top:30px">មេរៀននេះមិនទាន់មាន Quiz ទេ។ <a href="#lessons">ត្រឡប់ក្រោយ</a></div>'; return; }
+    var answers = l.quiz.map(function () { return null; }), letters = ['ក', 'ខ', 'គ', 'ឃ', 'ង', 'ច'];
+    app.innerHTML =
+      '<div class="crumbs"><a href="#lessons">📚 មេរៀន</a> › <a href="#lesson/' + encodeURIComponent(l.id) + '">' + esc(l.title) + '</a> › Quiz</div>' +
+      '<h1>📝 Quiz៖ ' + esc(l.title) + '</h1>' +
+      '<div class="card quiz-status"><b id="q-count">ឆ្លើយបាន ០/' + kh(l.quiz.length) + '</b><div class="bar"><span id="q-bar" style="width:0%"></span></div><b id="q-score">✅ ០</b></div>' +
+      l.quiz.map(function (q, i) {
+        return '<div class="card quiz-q" data-i="' + i + '"><p class="q-text">' + kh(i + 1) + '. ' + esc(q.q) + '</p><div class="opts">' +
+          q.options.map(function (o, j) { return '<button class="opt" type="button" data-o="' + j + '"><span class="letter">' + letters[j] + '</span><span>' + esc(o) + '</span></button>'; }).join('') +
+          '</div><div class="explain" hidden></div></div>';
+      }).join('') +
+      '<div id="q-result"></div>';
+
+    app.querySelectorAll('.quiz-q').forEach(function (box) {
+      var i = +box.getAttribute('data-i'), q = l.quiz[i];
+      box.querySelectorAll('.opt').forEach(function (btn) {
+        btn.onclick = function () {
+          if (answers[i] !== null) return;
+          var o = +btn.getAttribute('data-o'), ok = o === q.answer;
+          answers[i] = o;
+          box.querySelectorAll('.opt').forEach(function (b) {
+            b.disabled = true;
+            var bo = +b.getAttribute('data-o');
+            if (bo === q.answer) b.classList.add('correct');
+            else if (bo === o) b.classList.add('wrong');
+          });
+          var ex = box.querySelector('.explain');
+          ex.hidden = false;
+          ex.innerHTML = (ok ? '<b class="ok">✅ ត្រឹមត្រូវ!</b> ' : '<b class="bad">❌ មិនទាន់ត្រូវ។</b> ចម្លើយត្រូវគឺ ' + letters[q.answer] + '។ ') + (q.explain ? esc(q.explain) : '');
+          math(ex);
+          update();
+        };
+      });
+    });
+    function update() {
+      var n = answers.filter(function (a) { return a !== null; }).length;
+      var sc = answers.filter(function (a, i) { return a === l.quiz[i].answer; }).length;
+      document.getElementById('q-count').textContent = 'ឆ្លើយបាន ' + kh(n) + '/' + kh(l.quiz.length);
+      document.getElementById('q-bar').style.width = (n / l.quiz.length * 100) + '%';
+      document.getElementById('q-score').textContent = '✅ ' + kh(sc);
+      if (n === l.quiz.length) finish(sc);
+    }
+    function finish(sc) {
+      var total = l.quiz.length, pct = sc / total;
+      if (progress.scores[l.id] == null || sc > progress.scores[l.id]) progress.scores[l.id] = sc;
+      if (pct >= 0.8) progress.done[l.id] = true;
+      saveProgress();
+      var msg = pct === 1 ? '🏆 អស្ចារ្យណាស់! ត្រូវទាំងអស់!' : pct >= 0.8 ? '🎉 ល្អណាស់! អ្នកយល់មេរៀននេះច្បាស់។' : pct >= 0.5 ? '👍 ល្អ! សូមពិនិត្យសំណួរដែលខុសម្តងទៀត។' : '💪 កុំបោះបង់! សូមអានមេរៀនឡើងវិញ ហើយសាកម្តងទៀត។';
+      var r = document.getElementById('q-result');
+      r.innerHTML = '<div class="card result"><div class="muted">ពិន្ទុរបស់អ្នក</div><div class="score">' + kh(sc) + ' / ' + kh(total) + '</div><p>' + msg + '</p>' +
+        '<div class="row" style="justify-content:center"><button class="btn" id="q-retry" type="button">🔄 ធ្វើម្តងទៀត</button>' +
+        '<a class="btn btn-ghost" href="#lesson/' + encodeURIComponent(l.id) + '">📖 ត្រឡប់ទៅមេរៀន</a>' +
+        (l.flashcards.length ? '<a class="btn btn-green" href="#cards/' + encodeURIComponent(l.id) + '">🃏 Flashcards</a>' : '') + '</div></div>';
+      document.getElementById('q-retry').onclick = function () { renderQuiz(id); window.scrollTo(0, 0); };
+      r.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    math();
+  }
+
+  /* =====================================================================
+     🃏 Flashcards
+     ===================================================================== */
+  function renderCards(id) {
+    var cards = [], title = 'Flashcards ទាំងអស់', back = '#lessons';
+    if (id === 'all') C.lessons.forEach(function (l) { l.flashcards.forEach(function (c) { cards.push({ front: c.front, back: c.back, from: l.title }); }); });
+    else {
+      var l = lessonById(id);
+      if (l) { title = 'Flashcards៖ ' + l.title; back = '#lesson/' + encodeURIComponent(l.id); l.flashcards.forEach(function (c) { cards.push({ front: c.front, back: c.back, from: l.title }); }); }
+    }
+    if (!cards.length) { app.innerHTML = '<div class="card empty" style="margin-top:30px">មិនទាន់មាន Flashcards ទេ។ <a href="#lessons">ត្រឡប់ក្រោយ</a></div>'; return; }
+    var i = 0, flipped = false;
+    app.innerHTML =
+      '<div class="flash-wrap"><div class="crumbs"><a href="' + back + '">← ត្រឡប់ក្រោយ</a></div><h1>🃏 ' + esc(title) + '</h1>' +
+      '<p class="muted">ចុចលើកាត (ឬចុច Space) ដើម្បីត្រឡប់មើលចម្លើយ។ ប្រើ ← → ដើម្បីប្តូរកាត។</p>' +
+      '<div class="flash" id="flash" tabindex="0" role="button" aria-label="ត្រឡប់កាត"><div class="flash-inner"><div class="face front"></div><div class="face back"></div></div></div>' +
+      '<div class="row" style="justify-content:space-between"><button class="btn btn-ghost" id="f-prev" type="button">← មុន</button><b id="f-count"></b><button class="btn btn-ghost" id="f-next" type="button">បន្ទាប់ →</button></div>' +
+      '<div class="row" style="justify-content:center;margin-top:14px"><button class="btn btn-ghost btn-sm" id="f-shuffle" type="button">🔀 លាយកាត</button></div></div>';
+    var el = document.getElementById('flash');
+    function show() {
+      var c = cards[i];
+      el.classList.toggle('flipped', flipped);
+      el.querySelector('.front').innerHTML = '<small>' + esc(c.from) + '</small><div>' + esc(c.front) + '</div><div class="hint">👆 ចុចដើម្បីមើលចម្លើយ</div>';
+      el.querySelector('.back').innerHTML = '<small>ចម្លើយ</small><div>' + esc(c.back) + '</div>';
+      document.getElementById('f-count').textContent = kh(i + 1) + ' / ' + kh(cards.length);
+      math(el);
+    }
+    function go(d) { i = (i + d + cards.length) % cards.length; flipped = false; el.classList.remove('flipped'); setTimeout(show, 150); }
+    el.onclick = function () { flipped = !flipped; el.classList.toggle('flipped', flipped); };
+    el.onkeydown = function (e) { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); el.onclick(); } };
+    document.getElementById('f-prev').onclick = function () { go(-1); };
+    document.getElementById('f-next').onclick = function () { go(1); };
+    document.getElementById('f-shuffle').onclick = function () {
+      for (var k = cards.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)); var t = cards[k]; cards[k] = cards[j]; cards[j] = t; }
+      i = 0; flipped = false; show(); toast('🔀 បានលាយកាតរួចរាល់');
+    };
+    document.onkeydown = function (e) {
+      if (!document.getElementById('flash')) { document.onkeydown = null; return; }
+      if (e.target.tagName === 'INPUT') return;
+      if (e.key === 'ArrowLeft') go(-1); if (e.key === 'ArrowRight') go(1);
+    };
+    show();
+  }
+
+  /* =====================================================================
+     📢 សេចក្តីប្រកាស
+     ===================================================================== */
+  function renderNews() {
+    var list = sortedNews();
+    app.innerHTML = '<section><h1>📢 សេចក្តីប្រកាស</h1>' + (list.length ? list.map(newsItem).join('') : '<div class="card empty">មិនទាន់មានសេចក្តីប្រកាស</div>') + '</section>';
+    math();
+  }
+
+  /* =====================================================================
+     👩‍🏫 TEACHER MODE
+     ===================================================================== */
+  function markDirty() {
+    dirty = true;
+    store.set(KEYS.draft, { base: baseHash, content: C });
+    updateTeacherBar();
+  }
+
+  function renderTeacher() {
+    if (!isTeacher) {
+      app.innerHTML = '<div class="card login"><h2>👩‍🏫 ចូល Teacher Mode</h2><p class="muted">សម្រាប់គ្រូបង្រៀនកែប្រែមេរៀន Quiz និងសេចក្តីប្រកាស។</p>' +
+        '<form id="login" class="form"><div class="field"><label for="pw">ពាក្យសម្ងាត់</label><input type="password" id="pw" autocomplete="current-password" required></div>' +
+        '<button class="btn" type="submit">ចូល</button><div id="pw-err" class="muted" style="color:var(--bad)"></div></form></div>';
+      document.getElementById('pw').focus();
+      document.getElementById('login').onsubmit = function (e) {
+        e.preventDefault();
+        if (document.getElementById('pw').value === String(C.site.teacherPassword || '')) {
+          isTeacher = true; updateTeacherBar(); renderTeacher(); toast('👋 សូមស្វាគមន៍ ' + (C.site.teacherName || 'លោកគ្រូ អ្នកគ្រូ'));
+        } else document.getElementById('pw-err').textContent = '❌ ពាក្យសម្ងាត់មិនត្រឹមត្រូវ';
+      };
+      return;
+    }
+    if (editing && editing.kind === 'lesson') return renderLessonForm();
+    if (editing && editing.kind === 'news') return renderNewsForm();
+
+    var tabs = [['lessons', '📚 មេរៀន'], ['news', '📢 សេចក្តីប្រកាស'], ['settings', '⚙️ ការកំណត់'], ['help', '❓ ជំនួយ']];
+    var html = '<h1 style="margin-top:24px">⚙️ ផ្ទាំងគ្រប់គ្រងសម្រាប់គ្រូ</h1>' +
+      '<div class="card" style="background:var(--primary-soft)">💡 ការកែប្រែត្រូវបានរក្សាទុកក្នុង browser នេះដោយស្វ័យប្រវត្តិ។ ដើម្បីឱ្យសិស្សឃើញ សូមចុច <b>«💾 ទាញយក HTML»</b> រួចយកឯកសារថ្មីនោះទៅជំនួសឯកសារចាស់នៅលើ Hosting។</div>' +
+      '<div class="tabs">' + tabs.map(function (t) { return '<button class="tab' + (tTab === t[0] ? ' active' : '') + '" data-t="' + t[0] + '" type="button">' + t[1] + '</button>'; }).join('') + '</div>';
+
+    if (tTab === 'lessons') {
+      html += '<div class="card"><div class="sec-head"><h2>📚 មេរៀន (' + kh(C.lessons.length) + ')</h2><button class="btn" id="add-lesson" type="button">➕ បន្ថែមមេរៀនថ្មី</button></div><div class="t-list">' +
+        (C.lessons.length ? C.lessons.map(function (l, i) {
+          return '<div class="t-item"><div class="lc-icon" style="flex-basis:42px;height:42px;font-size:20px">' + esc(l.icon || '📘') + '</div><div class="grow"><b>' + esc(l.title) + '</b><span class="muted" style="font-size:.85rem">' + esc(l.grade) + ' · ' + kh(l.quiz.length) + ' សំណួរ · ' + kh(l.flashcards.length) + ' កាត</span></div>' +
+            '<div class="row"><button class="btn btn-ghost btn-sm" data-up="' + i + '" type="button" title="ផ្លាស់ទីឡើង"' + (i === 0 ? ' disabled' : '') + '>⬆</button><button class="btn btn-ghost btn-sm" data-down="' + i + '" type="button" title="ផ្លាស់ទីចុះ"' + (i === C.lessons.length - 1 ? ' disabled' : '') + '>⬇</button>' +
+            '<button class="btn btn-sm" data-edit="' + i + '" type="button">✏️ កែ</button><button class="btn btn-danger btn-sm" data-del="' + i + '" type="button">🗑️</button></div></div>';
+        }).join('') : '<div class="empty">មិនទាន់មានមេរៀន</div>') + '</div></div>';
+    } else if (tTab === 'news') {
+      html += '<div class="card"><div class="sec-head"><h2>📢 សេចក្តីប្រកាស (' + kh(C.announcements.length) + ')</h2><button class="btn" id="add-news" type="button">➕ បន្ថែមសេចក្តីប្រកាស</button></div><div class="t-list">' +
+        (C.announcements.length ? C.announcements.map(function (a, i) {
+          var t = NEWS_TYPES[a.type] || NEWS_TYPES.news;
+          return '<div class="t-item"><div style="font-size:22px">' + t[0] + '</div><div class="grow"><b>' + esc(a.title) + '</b><span class="muted" style="font-size:.85rem">' + t[1] + ' · ' + fmtDate(a.date) + '</span></div>' +
+            '<div class="row"><button class="btn btn-sm" data-nedit="' + i + '" type="button">✏️ កែ</button><button class="btn btn-danger btn-sm" data-ndel="' + i + '" type="button">🗑️</button></div></div>';
+        }).join('') : '<div class="empty">មិនទាន់មានសេចក្តីប្រកាស</div>') + '</div></div>';
+    } else if (tTab === 'settings') {
+      var s = C.site;
+      html += '<form class="card form" id="settings"><h2>⚙️ ការកំណត់គេហទំព័រ</h2>' +
+        '<div class="two">' + fld('title', 'ចំណងជើងគេហទំព័រ', s.title) + fld('subject', 'មុខវិជ្ជា', s.subject) + '</div>' +
+        '<div class="two">' + fld('grades', 'កម្រិតថ្នាក់', s.grades) + fld('schoolName', 'ឈ្មោះសាលា', s.schoolName) + '</div>' +
+        '<div class="two">' + fld('teacherName', 'ឈ្មោះគ្រូ', s.teacherName) + '<div class="field"><label>ពាក្យសម្ងាត់ថ្មី</label><input type="text" name="newPassword" placeholder="ទុកទទេ បើមិនប្តូរ"><div class="help">⚠️ ពាក្យសម្ងាត់នេះការពារបានតែកម្រិតស្រាល</div></div></div>' +
+        area('welcome', 'ឃ្លាស្វាគមន៍ (ទំព័រដើម)', s.welcome) +
+        imgField('heroImage', 'រូបភាពទំព័រដើម', s.heroImage, 'ទុកទទេ ដើម្បីបង្ហាញរូបមន្តគំរូ') +
+        '<div class="two"><div class="field"><label>🎨 ពណ៌សំខាន់</label><div class="color-in"><input type="color" name="primaryColor" value="' + esc(s.primaryColor || '#2563eb') + '"><span class="muted">ប៊ូតុង តំណភ្ជាប់ ចំណងជើង</span></div></div>' +
+        '<div class="field"><label>🎨 ពណ៌ទីពីរ</label><div class="color-in"><input type="color" name="secondaryColor" value="' + esc(s.secondaryColor || '#16a34a') + '"><span class="muted">គោលបំណង Flashcards</span></div></div></div>' +
+        '<div class="row"><button class="btn" type="submit">💾 រក្សាទុក</button><button class="btn btn-ghost" type="button" id="reset-draft">↩️ បោះបង់ការកែប្រែទាំងអស់</button></div></form>';
+    } else {
+      html += '<div class="card lesson-content"><h2>❓ ជំនួយសម្រាប់គ្រូ</h2>' +
+        '<h3>✍️ ការសរសេររូបមន្ត</h3><p>សរសេររូបមន្តរវាង <code>$...$</code> សម្រាប់ក្នុងបន្ទាត់ ឬ <code>$$...$$</code> សម្រាប់បន្ទាត់ដាច់ដោយឡែក។ ឧទាហរណ៍៖</p>' +
+        '<ul><li><code>$x^2$</code> → $x^2$</li><li><code>$\\frac{a}{b}$</code> → $\\frac{a}{b}$</li><li><code>$\\sqrt{x}$</code> → $\\sqrt{x}$</li><li><code>$\\Delta = b^2 - 4ac$</code> → $\\Delta = b^2 - 4ac$</li><li><code>$\\int_a^b f(x)\\,dx$</code> → $\\int_a^b f(x)\\,dx$</li></ul>' +
+        '<h3>📖 ខ្លឹមសារមេរៀន</h3><p>អាចសរសេរអត្ថបទធម្មតា (ដកឃ្លាមួយបន្ទាត់ ដើម្បីចែកកថាខណ្ឌ) ឬប្រើ HTML៖ <code>&lt;h3&gt;</code> ចំណងជើងតូច, <code>&lt;p&gt;</code> កថាខណ្ឌ, <code>&lt;ul&gt;&lt;li&gt;</code> បញ្ជី, <code>&lt;b&gt;</code> អក្សរដិត, <code>&lt;br&gt;</code> ចុះបន្ទាត់។</p>' +
+        '<h3>🎬 វីដេអូ និង 📄 PDF</h3><p>ចម្លង Link YouTube (ឧ. <code>https://www.youtube.com/watch?v=...</code> ឬ <code>https://youtu.be/...</code>) មកបិទភ្ជាប់។ សម្រាប់ PDF សូមដាក់ឯកសារលើ Google Drive → Share → «Anyone with the link» → ចម្លង Link មកបិទភ្ជាប់។</p>' +
+        '<h3>💾 ការរក្សាទុក</h3><p>ការកែប្រែទាំងអស់នៅក្នុង browser នេះតែប៉ុណ្ណោះ រហូតដល់អ្នកចុច «ទាញយក HTML» ហើយ Upload ឯកសារថ្មី (ឈ្មោះ index.html) ជំនួសឯកសារចាស់។</p></div>';
+    }
+    app.innerHTML = html;
+
+    app.querySelectorAll('.tab').forEach(function (b) { b.onclick = function () { tTab = b.getAttribute('data-t'); renderTeacher(); }; });
+    on('#add-lesson', function () { editing = { kind: 'lesson', isNew: true, data: { id: uid('lesson'), grade: '', chapter: '', icon: '📘', title: '', description: '', objectives: [], content: '', image: '', imageCaption: '', video: '', pdf: '', pdfLabel: 'ទាញយកលំហាត់ PDF', examples: [], quiz: [], flashcards: [] } }; renderTeacher(); });
+    on('#add-news', function () { editing = { kind: 'news', isNew: true, data: { id: uid('news'), date: new Date().toISOString().slice(0, 10), type: 'homework', title: '', body: '' } }; renderTeacher(); });
+    app.querySelectorAll('[data-edit]').forEach(function (b) { b.onclick = function () { editing = { kind: 'lesson', isNew: false, data: clone(C.lessons[+b.getAttribute('data-edit')]) }; renderTeacher(); }; });
+    app.querySelectorAll('[data-del]').forEach(function (b) { b.onclick = function () { var i = +b.getAttribute('data-del'); if (confirm('លុបមេរៀន «' + C.lessons[i].title + '»?')) { C.lessons.splice(i, 1); markDirty(); renderTeacher(); toast('🗑️ បានលុបមេរៀន'); } }; });
+    app.querySelectorAll('[data-up]').forEach(function (b) { b.onclick = function () { move(+b.getAttribute('data-up'), -1); }; });
+    app.querySelectorAll('[data-down]').forEach(function (b) { b.onclick = function () { move(+b.getAttribute('data-down'), 1); }; });
+    app.querySelectorAll('[data-nedit]').forEach(function (b) { b.onclick = function () { editing = { kind: 'news', isNew: false, data: clone(C.announcements[+b.getAttribute('data-nedit')]) }; renderTeacher(); }; });
+    app.querySelectorAll('[data-ndel]').forEach(function (b) { b.onclick = function () { var i = +b.getAttribute('data-ndel'); if (confirm('លុបសេចក្តីប្រកាសនេះ?')) { C.announcements.splice(i, 1); markDirty(); renderTeacher(); } }; });
+
+    var sf = document.getElementById('settings');
+    if (sf) {
+      bindImageInputs(sf);
+      sf.onsubmit = function (e) {
+        e.preventDefault();
+        var f = sf.elements, s = C.site;
+        ['title', 'subject', 'grades', 'schoolName', 'teacherName', 'welcome', 'heroImage', 'primaryColor', 'secondaryColor'].forEach(function (k) { s[k] = f[k].value.trim(); });
+        if (f.newPassword.value.trim()) s.teacherPassword = f.newPassword.value.trim();
+        markDirty(); applySite(); renderTeacher(); toast('✅ បានរក្សាទុកការកំណត់');
+      };
+      on('#reset-draft', function () {
+        if (!confirm('បោះបង់ការកែប្រែទាំងអស់ ហើយត្រឡប់ទៅខ្លឹមសារដើមក្នុងឯកសារ?')) return;
+        store.del(KEYS.draft); C = clone(window.CONTENT); normalize(); dirty = false; applySite(); renderTeacher(); toast('↩️ បានត្រឡប់ទៅខ្លឹមសារដើម');
+      });
+    }
+    math();
+  }
+  function move(i, d) { var j = i + d; if (j < 0 || j >= C.lessons.length) return; var t = C.lessons[i]; C.lessons[i] = C.lessons[j]; C.lessons[j] = t; markDirty(); renderTeacher(); }
+  function on(sel, fn) { var el = app.querySelector(sel); if (el) el.onclick = fn; }
+
+  /* ---------- ធាតុ Form ---------- */
+  function fld(name, label, val, help, type) {
+    return '<div class="field"><label>' + label + '</label><input type="' + (type || 'text') + '" name="' + name + '" value="' + esc(val) + '">' + (help ? '<div class="help">' + help + '</div>' : '') + '</div>';
+  }
+  function area(name, label, val, help, cls) {
+    return '<div class="field"><label>' + label + '</label><textarea name="' + name + '"' + (cls ? ' class="' + cls + '"' : '') + '>' + esc(val) + '</textarea>' + (help ? '<div class="help">' + help + '</div>' : '') + '</div>';
+  }
+  function imgField(name, label, val, help) {
+    return '<div class="field"><label>' + label + '</label><input type="text" name="' + name + '" value="' + esc(val) + '" placeholder="បិទភ្ជាប់ Link រូបភាព https://...">' +
+      '<div class="row" style="margin-top:6px"><label class="btn btn-ghost btn-sm" style="cursor:pointer">📁 Upload រូបភាព<input type="file" accept="image/*" data-img-for="' + name + '" hidden></label>' +
+      '<button class="btn btn-ghost btn-sm" type="button" data-img-clear="' + name + '">✖ លុបរូបភាព</button></div>' +
+      '<div class="help">' + (help || '') + ' (រូបភាពដែល Upload នឹងត្រូវបង្រួមទំហំ ហើយរក្សាទុកក្នុងឯកសារ HTML ផ្ទាល់)</div>' +
+      (val ? '<img class="thumb" src="' + esc(val) + '" alt="">' : '') + '</div>';
+  }
+  function bindImageInputs(form) {
+    form.querySelectorAll('[data-img-for]').forEach(function (inp) {
+      inp.onchange = function () {
+        var file = inp.files[0]; if (!file) return;
+        readImage(file, function (url) {
+          var target = form.querySelector('[name="' + inp.getAttribute('data-img-for') + '"]');
+          target.value = url;
+          var th = target.parentNode.querySelector('.thumb');
+          if (!th) { th = document.createElement('img'); th.className = 'thumb'; target.parentNode.appendChild(th); }
+          th.src = url; toast('🖼️ បានបញ្ចូលរូបភាព');
+        });
+      };
+    });
+    form.querySelectorAll('[data-img-clear]').forEach(function (b) {
+      b.onclick = function () { var t = form.querySelector('[name="' + b.getAttribute('data-img-clear') + '"]'); t.value = ''; var th = t.parentNode.querySelector('.thumb'); if (th) th.remove(); };
+    });
+  }
+  function readImage(file, cb) {  // បង្រួមរូបភាពមិនឱ្យធំពេក
+    var r = new FileReader();
+    r.onload = function () {
+      var img = new Image();
+      img.onload = function () {
+        var max = 1200, w = img.width, h = img.height;
+        if (w > max) { h = Math.round(h * max / w); w = max; }
+        var c = document.createElement('canvas'); c.width = w; c.height = h;
+        var ctx = c.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h); ctx.drawImage(img, 0, 0, w, h);
+        try { cb(c.toDataURL('image/jpeg', 0.82)); } catch (e) { cb(r.result); }
+      };
+      img.onerror = function () { cb(r.result); };
+      img.src = r.result;
+    };
+    r.readAsDataURL(file);
+  }
+
+  /* ---------- Form កែមេរៀន ---------- */
+  function renderLessonForm() {
+    var l = editing.data, letters = ['ក', 'ខ', 'គ', 'ឃ'];
+    var html = '<div class="crumbs"><a href="#teacher" id="back-list">← ត្រឡប់ទៅផ្ទាំងគ្រប់គ្រង</a></div>' +
+      '<h1>' + (editing.isNew ? '➕ បន្ថែមមេរៀនថ្មី' : '✏️ កែមេរៀន៖ ' + esc(l.title)) + '</h1>' +
+      '<form class="form" id="lesson-form">' +
+      '<div class="card form"><h2>📋 ព័ត៌មានមេរៀន</h2>' +
+        '<div class="three">' + fld('title', 'ចំណងជើងមេរៀន *', l.title) + fld('grade', 'ថ្នាក់', l.grade, 'ឧ. ថ្នាក់ទី១០') + fld('chapter', 'ជំពូក', l.chapter) + '</div>' +
+        '<div class="two">' + fld('icon', 'រូបតំណាង (Emoji)', l.icon, 'ឧ. 📐 📈 🧮 🔢 📊 🧪') + fld('description', 'ការពិពណ៌នាខ្លីៗ', l.description) + '</div>' +
+        area('objectives', '🎯 គោលបំណង (មួយបន្ទាត់ = មួយគោលបំណង)', l.objectives.join('\n')) +
+        area('content', '📖 ខ្លឹមសារមេរៀន', l.content, 'អាចសរសេរអត្ថបទធម្មតា ឬ HTML។ រូបមន្ត៖ $x^2$ ឬ $$\\frac{a}{b}$$ (មើលផ្ទាំង ❓ ជំនួយ)', 'tall') +
+        '<div class="two">' + imgField('image', '🖼️ រូបភាព', l.image) + fld('imageCaption', 'ពាក្យពន្យល់រូបភាព', l.imageCaption) + '</div>' +
+        '<div class="three">' + fld('video', '🎬 Link វីដេអូ YouTube', l.video, 'ឧ. https://youtu.be/xxxxxxxxxxx') + fld('pdf', '📄 Link ឯកសារ PDF', l.pdf, 'ឧ. Link ពី Google Drive') + fld('pdfLabel', 'ឈ្មោះប៊ូតុង PDF', l.pdfLabel) + '</div>' +
+      '</div>' +
+
+      '<div class="card form"><div class="sec-head"><h2>✏️ ឧទាហរណ៍ (' + kh(l.examples.length) + ')</h2><button class="btn btn-ghost btn-sm" type="button" data-add="examples">➕ បន្ថែមឧទាហរណ៍</button></div><div class="rep" data-rep="examples">' +
+        l.examples.map(function (e, i) {
+          return '<div class="rep-row"><div class="rep-head">ឧទាហរណ៍ទី ' + kh(i + 1) + rowBtns('examples', i) + '</div>' +
+            '<textarea data-f="q" placeholder="សំណួរ">' + esc(e.q) + '</textarea><textarea data-f="a" placeholder="ដំណោះស្រាយ (ប្រើ <br> ដើម្បីចុះបន្ទាត់)">' + esc(e.a) + '</textarea></div>';
+        }).join('') + '</div></div>' +
+
+      '<div class="card form"><div class="sec-head"><h2>📝 សំណួរ Quiz (' + kh(l.quiz.length) + ')</h2><button class="btn btn-ghost btn-sm" type="button" data-add="quiz">➕ បន្ថែមសំណួរ</button></div>' +
+        '<div class="help muted">ចុចរង្វង់ ⚪ ខាងមុខចម្លើយដែលត្រឹមត្រូវ។ ចម្លើយដែលទុកទទេនឹងមិនបង្ហាញ។</div><div class="rep" data-rep="quiz">' +
+        l.quiz.map(function (q, i) {
+          var opts = q.options.slice(); while (opts.length < 4) opts.push('');
+          return '<div class="rep-row"><div class="rep-head">សំណួរទី ' + kh(i + 1) + rowBtns('quiz', i) + '</div>' +
+            '<input type="text" data-f="q" placeholder="សំណួរ" value="' + esc(q.q) + '">' +
+            opts.map(function (o, j) {
+              return '<div class="opt-edit"><input type="radio" name="ans-' + i + '" value="' + j + '"' + (q.answer === j ? ' checked' : '') + ' title="ចម្លើយត្រូវ"><b>' + letters[j] + '</b><input type="text" data-f="o' + j + '" placeholder="ចម្លើយ ' + letters[j] + '" value="' + esc(o) + '"></div>';
+            }).join('') +
+            '<input type="text" data-f="explain" placeholder="ការពន្យល់ (បង្ហាញក្រោយសិស្សឆ្លើយ)" value="' + esc(q.explain) + '"></div>';
+        }).join('') + '</div></div>' +
+
+      '<div class="card form"><div class="sec-head"><h2>🃏 Flashcards (' + kh(l.flashcards.length) + ')</h2><button class="btn btn-ghost btn-sm" type="button" data-add="flashcards">➕ បន្ថែមកាត</button></div><div class="rep" data-rep="flashcards">' +
+        l.flashcards.map(function (c, i) {
+          return '<div class="rep-row"><div class="rep-head">កាតទី ' + kh(i + 1) + rowBtns('flashcards', i) + '</div>' +
+            '<div class="two"><input type="text" data-f="front" placeholder="មុខកាត (សំណួរ/ពាក្យ)" value="' + esc(c.front) + '"><input type="text" data-f="back" placeholder="ខ្នងកាត (ចម្លើយ)" value="' + esc(c.back) + '"></div></div>';
+        }).join('') + '</div></div>' +
+
+      '<div class="card row" style="position:sticky;bottom:80px;z-index:5"><button class="btn btn-lg" type="submit">💾 រក្សាទុកមេរៀន</button><button class="btn btn-ghost" type="button" id="cancel-edit">បោះបង់</button></div>' +
+      '</form>';
+    app.innerHTML = html;
+    var form = document.getElementById('lesson-form');
+    bindImageInputs(form);
+
+    function collect() {  // អានតម្លៃពី Form ចូល editing.data
+      var f = form.elements;
+      ['title', 'grade', 'chapter', 'icon', 'description', 'content', 'image', 'imageCaption', 'video', 'pdf', 'pdfLabel'].forEach(function (k) { l[k] = f[k].value.trim(); });
+      l.objectives = f.objectives.value.split('\n').map(function (s) { return s.trim(); }).filter(Boolean);
+      l.examples = rows('examples').map(function (r) { return { q: val(r, 'q'), a: val(r, 'a') }; });
+      l.quiz = rows('quiz').map(function (r, i) {
+        var chk = r.querySelector('input[type=radio]:checked');
+        return { q: val(r, 'q'), options: [0, 1, 2, 3].map(function (j) { return val(r, 'o' + j); }), answer: chk ? +chk.value : -1, explain: val(r, 'explain') };
+      });
+      l.flashcards = rows('flashcards').map(function (r) { return { front: val(r, 'front'), back: val(r, 'back') }; });
+    }
+    function rows(k) { return Array.prototype.slice.call(form.querySelectorAll('[data-rep="' + k + '"] > .rep-row')); }
+    function val(r, f) { var el = r.querySelector('[data-f="' + f + '"]'); return el ? el.value.trim() : ''; }
+
+    form.querySelectorAll('[data-add]').forEach(function (b) {
+      b.onclick = function () {
+        collect(); var k = b.getAttribute('data-add');
+        if (k === 'examples') l.examples.push({ q: '', a: '' });
+        if (k === 'quiz') l.quiz.push({ q: '', options: ['', '', '', ''], answer: 0, explain: '' });
+        if (k === 'flashcards') l.flashcards.push({ front: '', back: '' });
+        var y = window.scrollY; renderLessonForm(); window.scrollTo(0, y);
+        var reps = app.querySelectorAll('[data-rep="' + k + '"] > .rep-row'); var last = reps[reps.length - 1];
+        if (last) { last.scrollIntoView({ block: 'center' }); var first = last.querySelector('textarea, input[type=text]'); if (first) first.focus(); }
+      };
+    });
+    form.querySelectorAll('[data-rm]').forEach(function (b) {
+      b.onclick = function () { collect(); var p = b.getAttribute('data-rm').split(':'); l[p[0]].splice(+p[1], 1); var y = window.scrollY; renderLessonForm(); window.scrollTo(0, y); };
+    });
+    form.querySelectorAll('[data-mv]').forEach(function (b) {
+      b.onclick = function () {
+        collect(); var p = b.getAttribute('data-mv').split(':'), arr = l[p[0]], i = +p[1], j = i + (+p[2]);
+        if (j < 0 || j >= arr.length) return; var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+        var y = window.scrollY; renderLessonForm(); window.scrollTo(0, y);
+      };
+    });
+    document.getElementById('cancel-edit').onclick = document.getElementById('back-list').onclick = function (e) {
+      e.preventDefault(); editing = null; renderTeacher(); window.scrollTo(0, 0);
+    };
+    form.onsubmit = function (e) {
+      e.preventDefault(); collect();
+      if (!l.title) { toast('⚠️ សូមបញ្ចូលចំណងជើងមេរៀន'); form.elements.title.focus(); return; }
+      // សម្អាតសំណួរ Quiz៖ លុបចម្លើយទទេ ហើយកែលេខចម្លើយត្រូវ
+      var bad = -1;
+      l.quiz = l.quiz.filter(function (q) { return q.q || q.options.some(Boolean); }).map(function (q, i) {
+        var opts = [], ans = -1;
+        q.options.forEach(function (o, j) { if (o) { if (j === q.answer) ans = opts.length; opts.push(o); } });
+        if (opts.length < 2 || ans < 0 || !q.q) bad = bad < 0 ? i : bad;
+        return { q: q.q, options: opts, answer: ans < 0 ? 0 : ans, explain: q.explain };
+      });
+      if (bad >= 0) { toast('⚠️ សំណួរទី ' + kh(bad + 1) + '៖ ត្រូវមានសំណួរ ចម្លើយយ៉ាងតិច ២ និងជ្រើសចម្លើយត្រូវ'); l.quiz = l.quiz; renderLessonForm(); return; }
+      l.examples = l.examples.filter(function (x) { return x.q || x.a; });
+      l.flashcards = l.flashcards.filter(function (x) { return x.front || x.back; });
+      if (editing.isNew) C.lessons.push(l);
+      else { var i = C.lessons.findIndex(function (x) { return x.id === l.id; }); if (i >= 0) C.lessons[i] = l; else C.lessons.push(l); }
+      markDirty(); editing = null; toast('✅ បានរក្សាទុកមេរៀន «' + l.title + '»');
+      location.hash = '#lesson/' + encodeURIComponent(l.id);
+    };
+  }
+  function rowBtns(k, i) {
+    return '<span class="row"><button class="btn btn-ghost btn-sm" type="button" data-mv="' + k + ':' + i + ':-1" title="ឡើង">⬆</button><button class="btn btn-ghost btn-sm" type="button" data-mv="' + k + ':' + i + ':1" title="ចុះ">⬇</button><button class="btn btn-danger btn-sm" type="button" data-rm="' + k + ':' + i + '" title="លុប">🗑️</button></span>';
+  }
+
+  /* ---------- Form សេចក្តីប្រកាស ---------- */
+  function renderNewsForm() {
+    var a = editing.data;
+    app.innerHTML = '<div class="crumbs"><a href="#teacher" id="back-list">← ត្រឡប់ទៅផ្ទាំងគ្រប់គ្រង</a></div>' +
+      '<h1>' + (editing.isNew ? '➕ សេចក្តីប្រកាសថ្មី' : '✏️ កែសេចក្តីប្រកាស') + '</h1>' +
+      '<form class="card form" id="news-form">' +
+        '<div class="two">' + fld('date', 'កាលបរិច្ឆេទ', a.date, '', 'date') +
+        '<div class="field"><label>ប្រភេទ</label><select name="type">' + Object.keys(NEWS_TYPES).map(function (k) { return '<option value="' + k + '"' + (a.type === k ? ' selected' : '') + '>' + NEWS_TYPES[k][0] + ' ' + NEWS_TYPES[k][1] + '</option>'; }).join('') + '</select></div></div>' +
+        fld('title', 'ចំណងជើង *', a.title) + area('body', 'ខ្លឹមសារ', a.body) +
+        '<div class="row"><button class="btn" type="submit">💾 រក្សាទុក</button><button class="btn btn-ghost" type="button" id="cancel-edit">បោះបង់</button></div></form>';
+    var form = document.getElementById('news-form');
+    document.getElementById('cancel-edit').onclick = document.getElementById('back-list').onclick = function (e) { e.preventDefault(); editing = null; renderTeacher(); };
+    form.onsubmit = function (e) {
+      e.preventDefault(); var f = form.elements;
+      a.date = f.date.value; a.type = f.type.value; a.title = f.title.value.trim(); a.body = f.body.value.trim();
+      if (!a.title) { toast('⚠️ សូមបញ្ចូលចំណងជើង'); return; }
+      if (editing.isNew) C.announcements.unshift(a);
+      else { var i = C.announcements.findIndex(function (x) { return x.id === a.id; }); if (i >= 0) C.announcements[i] = a; }
+      markDirty(); editing = null; tTab = 'news'; renderTeacher(); toast('✅ បានរក្សាទុកសេចក្តីប្រកាស');
+    };
+  }
+
+  /* ---------- 💾 ទាញយក HTML (ឯកសារថ្មីដែលមានខ្លឹមសារបានកែ) ---------- */
+  function exportHTML() {
+    var s = PRISTINE.indexOf(START), e = PRISTINE.indexOf(END);
+    if (s < 0 || e < 0) { alert('មិនអាចបង្កើតឯកសារបានទេ៖ រកមិនឃើញសញ្ញា CONTENT'); return; }
+    var json = JSON.stringify(C, null, 2).replace(/<\//g, '<\\/').replace(/<!--/g, '<\\!--');
+    var out = PRISTINE.slice(0, s + START.length) + '\nwindow.CONTENT = ' + json + ';\n' + PRISTINE.slice(e);
+    out = out.replace(/<title>[\s\S]*?<\/title>/, '<title>' + esc(C.site.title || 'គេហទំព័រសិក្សា') + '</title>');
+    var blob = new Blob([out], { type: 'text/html;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'index.html';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+    dirty = false; updateTeacherBar();
+    toast('💾 បានទាញយក index.html — យកវាទៅជំនួសឯកសារចាស់');
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
+</body>
+</html>
